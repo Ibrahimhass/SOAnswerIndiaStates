@@ -6,14 +6,6 @@
 //  Copyright © 2018 Ibrahim Hassan. All rights reserved.
 //
 
-//
-//  Swift-File.swift
-//  TestObj-C
-//
-//  Created by Ibrahim Hassan on 04/08/18.
-//  Copyright © 2018 Ibrahim Hassan. All rights reserved.
-//
-
 import Foundation
 import UIKit
 
@@ -48,11 +40,19 @@ class StateView : UIView {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let location = touches.first?.location(in: self) else { return }
-        if let color : CGColor = self.layer.colorOfPoint(point: location) {
+        let color = self.layer.colorOfPoint(point: location)
+        if (color.alpha != 0) {
+            print ("Touched \(String(describing: stateName))")
+        }
+    }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if let color : CGColor = self.layer.colorOfPoint(point: point) {
             if (color.alpha != 0) {
-                print ("Touched \(String(describing: stateName))")
+                return self
             }
         }
+        return nil
     }
 }
 
